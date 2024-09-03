@@ -201,6 +201,8 @@ services:
     depends_on:
       - db
       - redis
+    port:
+      - 5001:5001
     volumes:
       # Mount the storage directory to the container, for storing user files.
       - ./volumes/app/storage:/app/api/storage
@@ -260,7 +262,8 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
-
+    port:
+      - 5432:5432
   # The redis cache.
   redis:
     image: redis:6-alpine
@@ -270,6 +273,8 @@ services:
       - ./volumes/redis/data:/data
     # Set the redis password when startup redis server.
     command: redis-server --requirepass ${REDIS_PASSWORD:-difyai123456}
+    port:
+      - 6379:6379
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
 
